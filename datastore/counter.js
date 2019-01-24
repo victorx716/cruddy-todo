@@ -45,7 +45,6 @@ exports.getNextUniqueId = (callback) => {
     // param in readCounter from CB in rC
     readCounter( function(error, counter) {
       // param in writeCounter from CB in wC
-
       writeCounter( counter+=1, function(err, string) {
         // use input callback here with the now accessible stringID
         callback(null, string)

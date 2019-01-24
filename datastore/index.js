@@ -9,21 +9,48 @@ var items = {};
 
 exports.create = (text, callback) => {
   counter.getNextUniqueId( function(err, id) {
-    // callback(null, { id, text }) 
     if (err) {
       throw ('error, no items')
     } else {
-        items[id] = text;
+        fs.writeFile(path.join(exports.dataDir, `${id}.txt`), text, (err) => {
+          if (err) {
+            throw err;
+          } else {
+              callback(null, { id, text }) 
+          }
+      });
     }
   });
-  console.log(id);
 };
 
 exports.readAll = (callback) => {
-  var data = _.map(items, (text, id) => {
-    return { id, text };
-  });
-  callback(null, data);
+  // var data = _.map(items, (text, id) => {
+    // return { id, id };
+  // });
+    // callback(null, data);
+    fs.readdir(exports.dataDir, (err, data) => {
+      if(err){
+        throw('still not it bruh')
+      } else {
+        console.log('data', data);
+      }
+    })
+
+
+
+
+
+
+      // THE RABBIT HOLE THEY TOLD US NOT TO DOOOOOOOOOOO!!!!!!!!
+  // fs.readFile(path.join(exports.dataDir, `${id}.txt`), (err, fileData) => {
+  //   if (err) {
+  //     throw ('error, aint nuffin workin')
+  //   } else {
+  //      let data = _.map(fileData, (text, id) => {
+  //        return { id, text};
+  //      })
+  //   }
+  // });
 };
 
 exports.readOne = (id, callback) => {
